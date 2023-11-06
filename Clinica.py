@@ -11,11 +11,6 @@ class Clinica:
         self.__filaDeCadastro = FilaEncadeada()
         self.__filaDoConsultorio = FilaEncadeada()
         self.__painel = Painel()
-        self.__menu = Menu(self)
-
-    @property
-    def menu(self):
-        return self.__menu
 
     def printPainel(self):
         print(self.__painel)
@@ -24,6 +19,7 @@ class Clinica:
         novaSenha = Senha(self.__proximaSenha)
         self.__filaDeCadastro.enfileirar(novaSenha)
         self.__proximaSenha += 1
+        print("Senha gerada com sucesso.", novaSenha)
 
     def cadastrar(self):
         try:
@@ -32,50 +28,28 @@ class Clinica:
             print(fe)
             return
         self.__painel.chamarParaCadastro(senha)
-        paciente = Paciente(senha, input("Nome\n> "), input("Plano\n> "))
+        paciente = Paciente(senha, input("[cadastro]\nNome:  "), input("[cadastro]\nPlano: "))
         self.__filaDoConsultorio.enfileirar(paciente)
+        print("Paciente cadastrado com sucesso.")
 
     def atender(self):
-        # colocar paciente atual na fila de consulta do painel.
         try:
             paciente = self.__filaDoConsultorio.desenfileirar()
         except FilaException as fe:
             print(fe)
             return
         self.__painel.chamarParaConsulta(paciente)
+        print("Chamando", paciente)
 
     def consultarPosicao(self):
-        chave = input("Identificação de senha: ")
+        chave = input("[consulta posição]\nChave: ")
         try:
             print("Você está na ", self.__filaDeCadastro.busca(chave),"ª posição na fila de atendimento.")
             return
         except FilaException:
             pass
         try:
-            print("Você está na ", self.__filaDoConsultorio.busca(chave),"ª posição na fila de atendimento.")
+            print("Você está na ", self.__filaDoConsultorio.busca(chave),"ª posição na fila do consultório.")
             return
         except FilaException as fe:
             print(fe)
-
-class Menu:
-    def __init__(self, clinica):
-        self.funcao = {
-                "1" : clinica.gerarSenha,
-                "2" : clinica.cadastrar,
-                "3" : clinica.atender,
-                "4" : clinica.consultarPosicao,
-                "5" : clinica.printPainel,
-                "6" : exit
-        }
-
-    def __str__(self):
-        return '''\
-Clinica Medica - Atendimento
-============================
-1. Obter senha de atendimento
-2. Chamar paciente para cadastro
-3. Chamar paciente para o consultório
-4. Consultar a posição atual
-5. Painel de atendimento
-6. Sair
-'''

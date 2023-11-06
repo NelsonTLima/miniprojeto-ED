@@ -1,7 +1,9 @@
 from Clinica import Clinica
+from Menu import Menu
 
-c = Clinica()
-print(c.menu)
+clinica = Clinica()
+menu = Menu(clinica)
+print(menu)
 while True:
-    comando = input("> ")
-    c.menu.funcao[comando]()
+    comando = input("[menu]\n> ")
+    menu.escolha(comando)
