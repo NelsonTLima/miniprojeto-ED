@@ -1,6 +1,5 @@
 from FilaEncadeada import Fila as FilaEncadeada
 from FilaEncadeada import FilaException
-from FilaSequencial import Fila as FilaSequencial
 from Painel import Painel
 from Paciente import Paciente
 from Senha import Senha
