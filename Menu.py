@@ -1,4 +1,5 @@
 from os import system
+from platform import system as platform
 
 class Menu:
     def __init__(self, clinica):
@@ -22,6 +23,9 @@ class Menu:
             print("Opção inválida.")
 
     def limpar(self):
+        if platform() == "Windows":
+            system("cls")
+            return
         system("clear")
 
     def __str__(self):
