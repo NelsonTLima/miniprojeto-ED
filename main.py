@@ -5,5 +5,8 @@ clinica = Clinica()
 menu = Menu(clinica)
 print(menu)
 while True:
-    comando = input("[menu]\n> ")
-    menu.escolha(comando)
+    try:
+        comando = input("[menu]\n> ")
+        menu.escolha(comando)
+    except KeyboardInterrupt:
+        break
